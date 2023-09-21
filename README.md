@@ -42,8 +42,19 @@ Also note how decryption uses the same key as the encryption key, as well as sim
 
 Is the Caesar cipher good? It's certainly *fast*, but when we talk about security it's not great.
 First of all, the size of the key is quite small. Usually we assess the strength by the number of bits of the key. Since the key is a number between 1 and 25, the number of bits requires for the key is `5` (since 2 to the power of 5 is over the amount of keys possible), which means an attacker needs to brute-force 5 bits (practically less than that) to brute-force the cipher - a task achievable even by hand.
-In its historical context, the Caesar Cipher was fine, but in today's standards it's quite weak. I would like to discuss another disadvtantage - one can 
+In its historical context, the Caesar Cipher was fine, but in today's standards it's quite weak as it can be brute-forced in less than a second.
 
+The Caesar cipher is a member of a larger family of ciphers, called [Substitution Ciphers](https://en.wikipedia.org/wiki/Substitution_cipher) - the cipher "simply" substitutes letters.
+Specifically, Caesar cipher substitutes a single letter to a different single letters, so we say it's a `Monoalphabetic Substitution Cipher`.
+Generally we can think of *all* monoalphabetic substitution ciphers as ciphers that take letters and apply some function to each letter seperately.
+Obviously, there are many possibilities - even for English letters we have `26! = 403291461126605635584000000` possibilities! This number has roughly 89 bits, which will take a while to brute-force with a computer, and not possible to perform by-hand.
+
+
+
+I would like to discuss another disadvtantage - one can cleverly choose the most probable result!
+
+## Frequency analysis
+Assuming the `plaintext` is written in English, one can perform a [frequency analysis](https://en.wikipedia.org/wiki/Frequency_analysis) - there is an expected distribution of letters in the English language and we could use that! For example
 
 
 
