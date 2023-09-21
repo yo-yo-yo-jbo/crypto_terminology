@@ -24,7 +24,14 @@ Decryption means :
 
 ```python
 def caesar_encrypt(plaintext, key):
+    """
+        Encrypts with Caesar cipher.
+    """
+
+    # Validate key
     assert key >= 1 and key <= 25, Exception(f'Invalid key: {key}')
+
+    # Work letter by letter
     result = ''
     for c in plaintext:
         if not c.isalpha():
@@ -32,9 +39,16 @@ def caesar_encrypt(plaintext, key):
             continue
         base = ord('a') if c.islower() else ord('A')
         result += chr(base + ((ord(c) - base - key) % 26))
+
+    # Return result
     return result
 
 def caesar_decrypt(ciphertext, key):
+    """
+        Decrypts with Caesar cipher.
+    """
+
+    # Decrypt by encrypting the opposite key
     return caesar_encrypt(ciphertext, 26-key)
 ```
 
@@ -72,6 +86,9 @@ class MonoalphabeticCipher(object):
         self.enc_table = list(string.ascii_lowercase)
         random.shuffle(self.enc_table)
         self.enc_table = ''.join(self.enc_table)
+
+        # Create the decryption table
+        self.dec_table = ''.join([ string.ascii_lowercase[self.enc_table.find(i)] for i in string.ascii_lowercase ])
 
     def _cipher(self, s, enc):
         """
