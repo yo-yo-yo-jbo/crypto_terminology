@@ -55,26 +55,57 @@ Here's an example of such a cipher - it takes an integer key and creates a monoa
 ```python
 import random
 import string
+
 class MonoalphabeticCipher(object):
+    """
+        Generic monoalphabetic substitution cipher.
+    """
     def __init__(self, key):
+        """
+            Creates an instance.
+        """
+
+        # Use the key to seed the PRNG
         random.seed(self.key)
-        self.table = list(string.ascii_lowercase)
-        random.shuffle(self.table)
+
+        # Create the encryption table
+        self.enc_table = list(string.ascii_lowercase)
+        random.shuffle(self.enc_table)
+        self.enc_table = ''.join(self.enc_table)
 
     def _cipher(self, s, enc):
+        """
+            Performs the cipher operation.
+        """
+
+        # Builds the result and concludes the right table to use
         result = ''
-        table = self.table if enc else 
+        table = self.enc_table if enc else self.dec_table
+
+        # Work character by character 
         for c in s:
             if not c.isalpha():
                 result += c
                 continue
             result += table[ord(c.lower()) - ord('a')].upper() if c.isupper() else table[ord(c) - ord('a')]
-    return result
+
+        # Return the result
+        return result
 
     def encrypt(self, plaintext):
+        """
+            Encrypt a plaintext.
+        """
+
+        # Simply encrypt
         return self._cipher(plaintext, True)
 
     def decrypt(self, ciphertext):
+        """
+            Decrypts a ciphertext.
+        """
+
+        # Simply decrypt
         return self._cipher(ciphertext, False)
 ```
 
