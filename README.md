@@ -16,3 +16,24 @@ Those two cases lead to the following terminology:
 - `Encryption` - transforming data using a `key` with the goal of making the data unintelligable without the key.
 
 Note `encoding` doesn't use keys, while `encryption` does. Usually, in encryption, we will be assuming the [Kerckhoff principle](https://en.wikipedia.org/wiki/Kerckhoffs%27s_principle) - the encryption methodology is well-known to everyone, and the only missing piece of information is a `key`.
+
+## First example - Caesar cipher
+It's impossible to write a crypgotraphy introduction without mentioning `Caesar's cipher`. Without diving into the historical context, we will mention it was one of the first documented ciphers used.
+The idea is simple: we use a key (between 1 and 25), and "rotate" all English letters according to the key. Historically, Caesar cipher used `key=3`, but we can use any other number between 1 and 26.
+Decryption means :
+
+```python
+def caesar_encrypt(plaintext, key):
+    result = ''
+    for c in plaintext:
+        if not c.isalpha():
+            result += c
+            continue
+        base = 'a' if c.islower() else 'A'
+            result += chr(base + ((ord(c) - base + key) % 26))
+    return result
+
+def caesar_decrypt(ciphertext, key):
+    return caesar_encrypt(ciphertext, 26-key)
+```
+
