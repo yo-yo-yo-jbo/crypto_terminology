@@ -29,11 +29,21 @@ def caesar_encrypt(plaintext, key):
         if not c.isalpha():
             result += c
             continue
-        base = 'a' if c.islower() else 'A'
-            result += chr(base + ((ord(c) - base + key) % 26))
+        base = ord('a') if c.islower() else ord('A')
+        result += chr(base + ((ord(c) - base - key) % 26))
     return result
 
 def caesar_decrypt(ciphertext, key):
     return caesar_encrypt(ciphertext, 26-key)
 ```
+
+For example, "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG" turns into "QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD" when `key=3`.
+Also note how decryption uses the same key as the encryption key, as well as simply calling the encryption method (due to the cyclic nature of the cipher).
+
+Is the Caesar cipher good? It's certainly *fast*, but when we talk about security it's not great.
+First of all, the size of the key is quite small. Usually we assess the strength by the number of bits of the key. Since the key is a number between 1 and 25, the number of bits requires for the key is `5` (since 2 to the power of 5 is over the amount of keys possible), which means an attacker needs to brute-force 5 bits (practically less than that) to brute-force the cipher - a task achievable even by hand.
+In its historical context, the Caesar Cipher was fine, but in today's standards it's quite weak. I would like to discuss another disadvtantage - one can 
+
+
+
 
