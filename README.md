@@ -50,24 +50,32 @@ The Caesar cipher is a member of a larger family of ciphers, called [Substitutio
 Specifically, Caesar cipher substitutes a single letter to a different single letters, so we say it's a `Monoalphabetic Substitution Cipher`.
 Generally we can think of *all* monoalphabetic substitution ciphers as ciphers that take letters and apply some function to each letter seperately.
 Obviously, there are many possibilities - even for English letters we have `26! = 403291461126605635584000000` possibilities! This number has roughly 89 bits, which will take a while to brute-force with a computer, and not possible to perform by-hand.
-Here's an example of such a cipher - it takes a key between `1` and `26! - 1` and creates a monoalphabetic cipher:
+Here's an example of such a cipher - it takes an integer key and creates a monoalphabetic cipher by seeding the random with it and creating a random shuffle:
 
 ```python
+import random
+import string
 class MonoalphabeticCipher(object):
     def __init__(self, key):
-        assert key >= 1 and key < 403291461126605635584000000, Exception(f'Invalid key: {key}')
-        self.table = []
+        random.seed(self.key)
+        self.table = list(string.ascii_lowercase)
+        random.shuffle(self.table)
 
-    def encrypt(self, plaintext):
-    result = ''
-    for c in plaintext:
-        if not c.isalpha():
-            result += c
-            continue
-        result += self.table[c.lower()].upper() if c.isupper() else self.table[c]
+    def _cipher(self, s, enc):
+        result = ''
+        table = self.table if enc else 
+        for c in s:
+            if not c.isalpha():
+                result += c
+                continue
+            result += table[ord(c.lower()) - ord('a')].upper() if c.isupper() else table[ord(c) - ord('a')]
     return result
 
-def monoalphabetic_decrypt(plaintext, key):
+    def encrypt(self, plaintext):
+        return self._cipher(plaintext, True)
+
+    def decrypt(self, ciphertext):
+        return self._cipher(ciphertext, False)
 ```
 
 
