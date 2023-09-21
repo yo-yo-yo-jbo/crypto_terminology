@@ -24,6 +24,7 @@ Decryption means :
 
 ```python
 def caesar_encrypt(plaintext, key):
+    assert key >= 1 and key <= 25, Exception(f'Invalid key: {key}')
     result = ''
     for c in plaintext:
         if not c.isalpha():
@@ -52,13 +53,18 @@ Obviously, there are many possibilities - even for English letters we have `26! 
 Here's an example of such a cipher - it takes a key between `1` and `26! - 1` and creates a monoalphabetic cipher:
 
 ```python
-def monoalphabetic_encrypt(plaintext, key):
+class MonoalphabeticCipher(object):
+    def __init__(self, key):
+        assert key >= 1 and key < 403291461126605635584000000, Exception(f'Invalid key: {key}')
+        self.table = []
+
+    def encrypt(self, plaintext):
     result = ''
     for c in plaintext:
         if not c.isalpha():
             result += c
             continue
-        result += d[c.lower()].upper() if c.isupper() else d[c]
+        result += self.table[c.lower()].upper() if c.isupper() else self.table[c]
     return result
 
 def monoalphabetic_decrypt(plaintext, key):
