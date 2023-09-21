@@ -80,7 +80,7 @@ class MonoalphabeticCipher(object):
         """
 
         # Use the key to seed the PRNG
-        random.seed(self.key)
+        random.seed(key)
 
         # Create the encryption table
         self.enc_table = list(string.ascii_lowercase)
