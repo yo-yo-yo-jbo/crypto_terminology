@@ -126,11 +126,63 @@ class MonoalphabeticCipher(object):
         return self._cipher(ciphertext, False)
 ```
 
+While you can attempt to brute-force such a generic cipher, it might take a while. For example, try to decode the following text:
 
-I would like to discuss another disadvtantage - one can cleverly choose the most probable result!
+```
+Etkwbyh kty akw oepabw wkdez, rw'i ess kmyh wby ueuyhi. "Wyyteayh
+ehhyiwyd rt oknupwyh ohrny ioetdes", "Beoxyh ehhyiwyd elwyh jetx
+wenuyhrta"...
+Dent Xrdi. Wbyz'hy ess esrxy.
+Jpw drd zkp, rt zkph wbhyy-uryoy uizobkskaz etd 1950'i wyobtkjhert ymyh
+wexy e skkx jybrtd wby yzyi kl e beoxyh? Drd zkp ymyh gktdyh gbew nedy
+brn wrox, gbew lkhoyi ibeuyd brn, gbew nez bemy nksdyd brn?
+R en e beoxyh, ytwyh nz gkhsd...
+Nrty ri e gkhsd wbew jyarti grwb iobkks. R'my sriwytyd wk wby wyeobyh
+ycusert lkh wby lrlwyytwb wrny bkg wk hydpoy e lheowrkt. R ptdyhiwetd
+rw. "Tk, Nhi. Inrwb, R drdt'w ibkg nz gkhx. R drd rw rt nz byed..."
+Dent xrd. Uhkjejsz okuryd rw. Wbyz'hy ess esrxy.
+R nedy e driokmyhz wkdez. R lkptd e oknupwyh. Gerw e iyoktd, wbri ri
+okks. Rw dkyi gbew R getw rw wk dk. Rl rw nexyi e nriwexy, rw'i jyoepiy
+R iohygyd pu. Tkw jyoepiy rw dkyit'w srxy ny...
+kh lyysi wbhyewytyd jz ny...
+kh wbrtxi R'n e inehw eii...
+kh dkyit'w srxy wyeobrta etd ibkpsdt'w jy byhy...
+Dent xrd. Ess by dkyi ri usez aenyi. Wbyz'hy ess esrxy.
+Etd wbyt rw beuuytyd... E dkkh kuytyd wk e gkhsd... Hpibrta wbhkpab wby
+ubkty srty srxy byhkrt wbhkpab et eddrow'i myrti, et ysyowhktro upsiy ri
+iytw kpw, e hylpay lhkn wby dez wk dez rtoknuywytoryi ri ikpabw... E
+jkehd ri lkptd.
+"Wbri ri rw... Wbri ri gbyhy R jyskta..."
+R xtkg ymyhzkty byhy... Ymyt rl R'my tymyh nyw wbyn, tymyh wesxyd wk
+wbyn, nez tymyh byeh lhkn wbyn eaert... R xtkg zkp ess...
+Dent xrd. Wzrta pu wby ubkty srty eaert. Wbyz'hy ess esrxy...
+Zkp jyw zkph eii gy'hy ess esrxy... Gy'my jyyt iukkt lyd jejz lkkd ew
+iobkks gbyt gy bptayhyd lkh iwyex... Wby jrwi kl nyew wbew zkp drd syw
+isru wbhkpab gyhy uhy-obygyd etd weiwysyii. Gy'my jyyt dknrtewyd jz
+iedriwi, kh ratkhyd jz wby euewbywro. Wby lyg wbew bed iknywbrta wk
+wyeob lkptd pi grssrta upursi, jpw wbkiy lyg ehy srxy dhkui kl gewyh rt
+wby dyiyhw.
+Wbri ri kph gkhsd tkg... Wby gkhsd kl wby ysyowhkt etd wby igrwob, wby
+jyepwz kl wby jepd. Gy nexy piy kl e iyhmroy eshyedz ycriwrta grwbkpw
+uezrta lkh gbew okpsd jy drhw obyeu rl rw geit'w hpt jz uhklrwyyhrta
+aspwwkti, etd zkp oess pi ohrnrtesi. Gy ycuskhy... Etd zkp oess pi
+ohrnrtesi. Gy ycriw grwbkpw ixrt okskh, grwbkpw tewrktesrwz, grwbkpw
+hysrarkpi jrei... Etd zkp oess pi ohrnrtesi. Zkp jprsd ewknro jknji,
+zkp geay gehi, zkp nphdyh, zkp obyew, etd sry wk pi etd whz wk nexy pi
+jysrymy rw'i lkh kph kgt akkd, zyw gy'hy wby ohrnrtesi.
+Zyi, R en e ohrnrtes. Nz ohrny ri wbew kl ophrkirwz. Nz ohrny ri wbew
+kl qpdarta uykusy jz gbew wbyz iez etd wbrtx, tkw gbew wbyz skkx srxy.
+Nz ohrny ri wbew kl kpwinehwrta zkp, iknywbrta wbew zkp grss tymyh
+lkharmy ny lkh.
+R en e beoxyh, etd wbri ri nz netrlyiwk. Zkp nez iwku wbri rtdrmrdpes,
+jpw zkp oet'w iwku pi ess...
+Elwyh ess, Gy'hy ess esrxy.
+```
+
+Obviously, punctuation symbols and spaces could be of great hint, but those could either be omitted by `Alice`, or she might use a more sophisticated method - for example, using `Base64` to make sure plaintext is (mostly) composed of letters, or even changing the cipher to work on bytes rather than letters (also effectively greatly increasing the key size).
+How should an attacker approach such a problem?
 
 ## Frequency analysis
-Assuming the `plaintext` is written in English, one can perform a [frequency analysis](https://en.wikipedia.org/wiki/Frequency_analysis) - there is an expected distribution of letters in the English language and we could use that! For example
-
+Assuming the `plaintext` is written in English, one can perform a [frequency analysis](https://en.wikipedia.org/wiki/Frequency_analysis) - there is an expected distribution of letters in the English language and we could use that! For example, it's well-known that the letter "e" is the most common one, so it's expected that the most repeated letter in the ciphertext is going to be mapped to "e". The letter "x" is not very common, so we expect one of the rarest letters in the ciphertext to be mapped to "x", and so on. We could even apply the same logic to more than one letter - for example, after "q" there is almost always a "u" in the English langugage.
 
 
