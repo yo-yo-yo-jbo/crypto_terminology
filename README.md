@@ -217,6 +217,7 @@ In this first blogpost, we've introduced some basic concepts such as the differe
 We've introduced the `Caesar Cipher` as an example of a larger family of ciphers called `Monoalphabetic Substitution Ciphers` and showed the basic idea of `Frequency Analysis` to break them.
 
 In the next blogpost, we'll continue talking about `Substitution Ciphers` and then move towards more modern cryptosystems.
+
 Stay tuned!
 
 Jonathan Bar Or
