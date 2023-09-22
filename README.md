@@ -212,3 +212,11 @@ def find_e(ciphertext):
 
 Indeed I can tell you that "e" was mapped to "y", just as this function indicates. Can you decrypt the entire thing?
 
+## Summary
+In this first blogpost, we've introduced some basic concepts such as the difference between `encoding`, `encryption` and `steganography`.
+We've introduced the `Caesar Cipher` as an example of a larger family of ciphers called `Monoalphabetic Substitution Ciphers` and showed the basic idea of `Frequency Analysis` to break them.
+
+In the next blogpost, we'll continue talking about `Substitution Ciphers` and then move towards more modern cryptosystems.
+Stay tuned!
+
+Jonathan Bar Or
