@@ -1,4 +1,4 @@
-# Introduction to cryptography - terminology and first examples
+# Introduction to cryptography - terminology and examples
 This is the first of a very long blogpost series I've been wanted to do for a long time.
 In this very first blogpost - I'll describe what cryptography is, what it *isn't* and give some first examples.
 
@@ -185,6 +185,7 @@ How should an attacker approach such a problem?
 ## Frequency analysis
 Assuming the `plaintext` is written in English, one can perform a [frequency analysis](https://en.wikipedia.org/wiki/Frequency_analysis) - there is an expected distribution of letters in the English language and we could use that! For example, it's well-known that the letter "e" is the most common one, so it's expected that the most repeated letter in the ciphertext is going to be mapped to "e". The letter "x" is not very common, so we expect one of the rarest letters in the ciphertext to be mapped to "x", and so on. We could even apply the same logic to more than one letter - for example, after "q" there is almost always a "u" in the English langugage. In other words - *the distribution of letters does not change in monoalphabetic substitution ciphers*.
 Note this will not give you the key, but our goal is to decrypt the ciphertext, so this is perfectly fine.
+![English letter frequencyies](2560px-English_letter_frequency_(alphabetic).svg.png)
 
 **Exercise** - can you use that idea to decrypt the ciphertext from the previous paragraph?
 If you're stuck, here's code that heuristically finds the mapping to the letter "e":
